@@ -7,7 +7,7 @@ def d3sb_model(theta, uvsamples, bins):
     rho  = 1e3*np.sqrt(u**2+v**2)
 
     rin, b = bins
-    w = theta
+    w = 10.**theta
 
     rbin = np.concatenate([np.array([rin]), b])
     wbin = np.append(np.concatenate([np.array([0.0]), w]), 0.)

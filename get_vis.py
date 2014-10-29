@@ -12,6 +12,7 @@ def get_vis(datafile):
     u = 2.24053329468e11*1e-3*dvis[0].data.par(0)[:]
     v = 2.24053329468e11*1e-3*dvis[0].data.par(1)[:]
     dvis.close()
+
     data = u, v, dreal, dimag, dwgt
 
     return data
