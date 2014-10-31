@@ -15,7 +15,7 @@ def d3sb_model(theta, uvsamples, bins):
     wgt = np.delete(ww, b.size+1)
 
     jarg = np.outer(2.*np.pi*rbin, rho/206264.806427)
-    jinc = sc.jn(1, jarg)/jarg
+    jinc = sc.j1(jarg)/jarg
 
     vis = np.dot(2.*np.pi*rbin**2*wgt, jinc)
 
