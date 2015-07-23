@@ -3106,14 +3106,14 @@ UVCHECK: Executed on: 2013-12-17T12:14:06.0
 UVCHECK: Command line inputs follow:
 UVCHECK:   vis=GGTau.1mm.vis
 UVMODEL: Miriad UvModel version 1.0 03-apr-2009
-UVMODEL: Executed on: 2014-12-08T12:50:17.0
+UVMODEL: Executed on: 2014-12-10T09:44:18.0
 UVMODEL: Command line inputs follow:
 UVMODEL:   vis=GGTau.1mm.vis
 UVMODEL:   model=model.im
 UVMODEL:   options=replace
 UVMODEL:   out=model.vis
 INVERT: Miriad Invert: version 1.0 19-apr-09
-INVERT: Executed on: 2014-12-08T12:53:49.0
+INVERT: Executed on: 2014-12-10T09:44:26.0
 INVERT: Command line inputs follow:
 INVERT:   vis=model.vis
 INVERT:   map=model.map
@@ -3124,7 +3124,7 @@ INVERT:   cell=0.025
 INVERT:   robust=2.0
 INVERT:   options=systemp,mfs
 CLEAN: Miriad Clean: version 4-Feb-08
-CLEAN: Executed on: 2014-12-08T12:53:50.0
+CLEAN: Executed on: 2014-12-10T09:44:26.0
 CLEAN: Command line inputs follow:
 CLEAN:   map=model.map
 CLEAN:   beam=model.beam
@@ -3137,7 +3137,7 @@ CLEAN: Steer Clip Level = 0.995
 CLEAN: Minpatch = 51
 CLEAN: Total Iterations = 153
 RESTOR: Miriad Restor: version 1.3 07-Feb-2002
-RESTOR: Executed on: 2014-12-08T12:53:50.0
+RESTOR: Executed on: 2014-12-10T09:44:27.0
 RESTOR: Command line inputs follow:
 RESTOR:   model=model.clean
 RESTOR:   beam=model.beam

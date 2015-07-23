@@ -44,7 +44,7 @@ sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, threads=nthreads, args=[
 
 # run emcee
 tic = time.time()
-sampler.run_mcmc(p0, 1500)
+sampler.run_mcmc(p0, 100)
 toc = time.time()
 print((toc-tic)/60.)
 

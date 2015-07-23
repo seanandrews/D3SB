@@ -26,14 +26,14 @@ cgdisp in=$name.cm type=con \
        labtyp=arcsec options=mirror beamtyp="b,l" \
        region='arcsec,box(3,-3,-3,3)' device=/xs
 
-fits in=$name.cm op=xyout out=$dir/$name.fits
+fits in=$name.cm op=xyout out=$dir/$name.cm.fits
 
-goto end
+#goto end
 
 cgcurs in=$name.cm options=stat \
        type=con slev=a,0.00275 \
        levs=-3,3,4,5,6,7,8,9,10,11,12,13,14,15 \
-       labtyp=arcsec region='arcsec,box(15,-15,-15,15)' \
+       labtyp=arcsec region='arcsec,box(5,-5,-5,5)' \
        device=/xs
 goto end
 

@@ -3106,14 +3106,14 @@ UVCHECK: Executed on: 2013-12-17T12:14:06.0
 UVCHECK: Command line inputs follow:
 UVCHECK:   vis=GGTau.1mm.vis
 UVMODEL: Miriad UvModel version 1.0 03-apr-2009
-UVMODEL: Executed on: 2014-12-08T12:50:17.0
+UVMODEL: Executed on: 2014-12-10T09:44:18.0
 UVMODEL: Command line inputs follow:
 UVMODEL:   vis=GGTau.1mm.vis
 UVMODEL:   model=model.im
 UVMODEL:   options=replace
 UVMODEL:   out=model.vis
 INVERT: Miriad Invert: version 1.0 19-apr-09
-INVERT: Executed on: 2014-12-08T12:53:49.0
+INVERT: Executed on: 2014-12-10T09:44:25.0
 INVERT: Command line inputs follow:
 INVERT:   vis=model.vis
 INVERT:   map=model.map
