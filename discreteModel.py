@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.special as sc
 
-def d3sbModel(theta, uvsamples, bins):
+def discreteModel(theta, uvsamples, bins):
 
     # retrieve inputs
     incl, PA, offset, w = theta
@@ -11,12 +11,12 @@ def d3sbModel(theta, uvsamples, bins):
     # convert angles to radians
     inclr = np.radians(incl)
     PAr = np.radians(PA)
-    offr = 1e3*offset/206264.806427
+    offr = offset/206264.806427
 
     # coordinate change to deal with projection, rotation, and shifts
     uprime = (u * np.cos(PAr) + v * np.sin(PAr)) * np.cos(inclr)
     vprime = (-u * np.sin(PAr) + v * np.cos(PAr))
-    rho = 1e3 * np.sqrt(uprime**2 + vprime**2) / 206264.806427
+    rho = np.sqrt(uprime**2 + vprime**2) / 206264.806427
 
     # re-orient arrays
     rbin = np.concatenate([np.array([rin]), b])
