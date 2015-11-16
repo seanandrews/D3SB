@@ -22,8 +22,8 @@ flux = 0.15
 sig = 0.3
 incl = PA = offx = offy = 0.0
 SB = (flux / (2*np.pi*sig**2)) * np.exp(-0.5*(cb/sig)**2)
+int_SB = np.trapz(2.*np.pi*SB*cb, cb)		# a check on the total flux
 itheta = incl, PA, np.array([offx, offy]), SB
-
 
 
 # FT and sample it for each configuration

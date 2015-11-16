@@ -12,14 +12,14 @@ config2 = 'alma.cycle3.6'
 default('simobserve')
 simobserve(project=simname+'.c1.sim', skymodel=simname+'.fits', \
            incenter='340GHz',inwidth='8GHz',integration='30s', \
-           antennalist=config1+'.cfg', totaltime='1800s', \
+           refdate='2015/05/01',antennalist=config1+'.cfg', totaltime='1800s', \
            overwrite=T, graphics='none', verbose=False)
 
 # simulate observations with long baselines
 default('simobserve')
 simobserve(project=simname+'.c2.sim', skymodel=simname+'.fits', \
            incenter='340GHz',inwidth='8GHz',integration='20s', \
-           antennalist=config2+'.cfg', totaltime='5400s', \
+           refdate='2015/05/02',antennalist=config2+'.cfg', totaltime='5400s', \
            overwrite=T, graphics='none', verbose=False)
 
 
@@ -76,6 +76,11 @@ for ix in np.arange(len(dirs)):
     os.system('rm -rf '+viss[ix]+'.vis.npz')
     np.savez(viss[ix]+'.vis', u=u, v=v, Vis=Vis, Wgt=Wgt)
 
+
+# make a concatenated MS to stuff in simulation for CASA imaging
+cfiles = [dir1+vis1+'.ms', dir2+vis2+'.ms']
+os.system('rm -rf dummy.ms')
+concat(vis=cfiles, concatvis=simname+'.ms')
 
 # clean up garbage
 os.system('rm -rf *.log *.last')

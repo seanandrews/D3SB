@@ -18,7 +18,7 @@ pointingspacing    =  ""
 caldirection       =  ""
 calflux            =  "1Jy"
 obsmode            =  "int"
-refdate            =  "2014/05/21"
+refdate            =  "2015/05/01"
 hourangle          =  "transit"
 totaltime          =  "1800s"
 antennalist        =  "alma.cycle3.3.cfg"
@@ -34,4 +34,4 @@ leakage            =  0.0
 graphics           =  "none"
 verbose            =  False
 overwrite          =  True
-#simobserve(project="dummy.c1.sim",skymodel="dummy.fits",inbright="",indirection="",incell="",incenter="340GHz",inwidth="8GHz",complist="",compwidth="8GHz",setpointings=True,ptgfile="$project.ptg.txt",integration="30s",direction=[''],mapsize=['', ''],maptype="ALMA",pointingspacing="",caldirection="",calflux="1Jy",obsmode="int",refdate="2014/05/21",hourangle="transit",totaltime="1800s",antennalist="alma.cycle3.3.cfg",sdantlist="aca.tp.cfg",sdant=0,thermalnoise="tsys-atm",user_pwv=0.5,t_ground=269.0,t_sky=260.0,tau0=0.1,seed=11111,leakage=0.0,graphics="none",verbose=False,overwrite=True)
+#simobserve(project="dummy.c1.sim",skymodel="dummy.fits",inbright="",indirection="",incell="",incenter="340GHz",inwidth="8GHz",complist="",compwidth="8GHz",setpointings=True,ptgfile="$project.ptg.txt",integration="30s",direction=[''],mapsize=['', ''],maptype="ALMA",pointingspacing="",caldirection="",calflux="1Jy",obsmode="int",refdate="2015/05/01",hourangle="transit",totaltime="1800s",antennalist="alma.cycle3.3.cfg",sdantlist="aca.tp.cfg",sdant=0,thermalnoise="tsys-atm",user_pwv=0.5,t_ground=269.0,t_sky=260.0,tau0=0.1,seed=11111,leakage=0.0,graphics="none",verbose=False,overwrite=True)
