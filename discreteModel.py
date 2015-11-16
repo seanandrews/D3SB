@@ -6,17 +6,17 @@ def discreteModel(theta, uvsamples, bins):
     # retrieve inputs
     incl, PA, offset, w = theta
     rin, b = bins
-    u, v = uvsamples
+    u, v = uvsamples			# in **lambda** units
 
     # convert angles to radians
     inclr = np.radians(incl)
     PAr = np.radians(PA)
-    offr = offset/206264.806427
+    offr = offset * np.pi / (180.*3600.)
 
     # coordinate change to deal with projection, rotation, and shifts
     uprime = (u * np.cos(PAr) + v * np.sin(PAr)) * np.cos(inclr)
     vprime = (-u * np.sin(PAr) + v * np.cos(PAr))
-    rho = np.sqrt(uprime**2 + vprime**2) / 206264.806427
+    rho = np.sqrt(uprime**2 + vprime**2) * np.pi / (180.*3600.)
 
     # re-orient arrays
     rbin = np.concatenate([np.array([rin]), b])
