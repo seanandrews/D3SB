@@ -5,10 +5,10 @@ from discreteModel import discreteModel
 
 
 # the output filename
-filename = 'test'
+filename = 'DATA/test'
 
 
-# define the "idealized" model
+# define a high resolution set of bins for an "idealized" model
 nbins = 4000
 b = 0.001 + 0.001*np.arange(nbins)
 a = np.roll(b, 1)
@@ -17,23 +17,24 @@ a[0] = rin
 cb = 0.5*(a+b)
 bins = rin, b
 
+# the brightness profile of the model
 flux = 0.15
 sig = 0.3
 incl = PA = offx = offy = 0.0
-SB_d3sb = (flux / (2*np.pi*sig**2)) * np.exp(-0.5*(cb/sig)**2)
-itheta = incl, PA, np.array([offx, offy]), SB_d3sb
+SB = (flux / (2*np.pi*sig**2)) * np.exp(-0.5*(cb/sig)**2)
+itheta = incl, PA, np.array([offx, offy]), SB
 
 
 
 # FT and sample it for each configuration
-ldata = np.load('lores.noisy.vis.npz')
+ldata = np.load('DATA/lores.noisy.vis.npz')
 lu = ldata['u']
 lv = ldata['v']
 lvis = ldata['Vis']
 lrms = 0.035e-3
 lo_vis = discreteModel(itheta, [lu, lv], bins)
 
-hdata = np.load('hires.noisy.vis.npz')
+hdata = np.load('DATA/hires.noisy.vis.npz')
 hu = hdata['u']
 hv = hdata['v']
 hvis = hdata['Vis']
