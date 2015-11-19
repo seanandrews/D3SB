@@ -46,11 +46,11 @@ hi_vis = discreteModel(itheta, [hu, hv], bins)
 # add (white) noise to the model visibilities; record noise in weights
 lnoise = np.random.normal(loc=0., scale=lrms*np.sqrt(len(lu)), size=len(lu))
 lo_vis += lnoise + 1j*lnoise
-lo_wgt = 1./lnoise**2
+lo_wgt = np.ones_like(lu)/(lrms*np.sqrt(len(lu)))**2
 
 hnoise = np.random.normal(loc=0., scale=hrms*np.sqrt(len(hu)), size=len(hu))
 hi_vis += hnoise + 1j*hnoise
-hi_wgt = 1./hnoise**2
+hi_wgt = np.ones_like(hu)/(lrms*np.sqrt(len(hu)))**2
 
 
 

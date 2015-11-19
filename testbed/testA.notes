@@ -1,0 +1,7 @@
+flux = 0.12
+sig = 0.5
+incl = PA = offx = offy = 0.0
+SB = (cb/sig)**-0.75 * np.exp(-0.5*(cb/sig)**2.5)
+int_SB = np.trapz(2.*np.pi*SB*cb, cb)           # a check on the total flux
+SB *= flux/int_SB
+
