@@ -18,8 +18,8 @@ cb = 0.5*(a+b)
 bins = rin, b
 
 # the brightness profile of the model
-flux = 0.15
-sig = 0.3
+flux = 0.12
+sig = 0.5
 incl = PA = offx = offy = 0.0
 SB = (flux / (2*np.pi*sig**2)) * np.exp(-0.5*(cb/sig)**2)
 int_SB = np.trapz(2.*np.pi*SB*cb, cb)		# a check on the total flux
