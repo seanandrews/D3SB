@@ -79,7 +79,7 @@ p0 = np.zeros((nwalkers, ndim))
 for i in range(nwalkers):
     ixs = br < 0.5*0.08
     sbtrial_o = gSB[~ixs] * (1.+np.random.uniform(-0.2, 0.2, np.sum(~ixs)))
-    sbtrial_i = gSB[ixs] * (1.+np.random.uniform(0, 2, np.sum(ixs)))
+    sbtrial_i = gSB[ixs] * (1.+np.random.uniform(0, 0.5, np.sum(ixs)))
     if (np.sum(ixs) > 1):
         m = np.log(sbtrial_i[0]/sbtrial_o[0])/np.log((br[ixs])[0]/(br[~ixs])[0])
         sbtrial_i[0:] = (sbtrial_i[0]/(br[ixs])[0]**m) * (br[ixs])[0:]**m 

@@ -53,47 +53,23 @@ nrho, nvis, nsig = nt
 
 
 
-# - SAMPLE POSTERIOR
-
-# load initial guesses
-p0 = (np.load('p0.npz'))['p0']
-
-# create a file to store progress information
-os.system('rm notes.dat')
-f = open("notes.dat", "w")
-f.close()
-
-# initialize sampler
-ndim, nwalkers, nthreads = nbbins, 100, 8
-data = nrho, nvis.real, nsig.real
-sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, threads=nthreads, \
-                                args=[data, bins])
-
-# emcee sampler; track time
-iter = 100
-tic0 = time.time()
-sampler.run_mcmc(p0, iter)
-toc = time.time()
-print(toc-tic0)
-
-# save the results in a binary file
-np.save('chain', sampler.chain)
-
-# add a note
-f = open("notes.dat", "a")
-f.write("{0:f}   {1:f}   {2:f}\n".format((toc-tic0)/3600., (toc-tic0)/3600., \
-                                         iter))
-f.close()
+# plot SB profile + posteriors
+plt.axis([0.001, 3, 1e-4, 2])
+plt.loglog(r, SB, 'k', r, stepSB, 'r')
+plt.savefig('losses_SB.pdf')
+plt.clf()
 
 
-for i in range(199):
-    tic = time.time()
-    sampler.run_mcmc(sampler.chain[:, -1, :], iter)
-    toc = time.time()
-    np.save('chain', sampler.chain)
-    f = open("notes.dat", "a")
-    f.write("{0:f}   {1:f}   {2:f}\n".format((toc-tic0)/3600., \
-                                             (toc-tic)/3600., \
-                                             (2+i)*iter))
-    f.close()
+# calculate the "binned" and "guess" visibilities 
+bvis = discrete1d_model(bSB, trho, bins)
+
+# plot the visibility profiles together
+plt.axis([0, 2700, -0.015, 0.13])
+plt.plot([0, 2700], [0, 0], '--k', alpha=0.5)
+plt.errorbar(1e-3*nrho, nvis.real, yerr=nsig.real, ecolor='k', fmt='.k', \
+             alpha=0.1)
+plt.plot(1e-3*trho, tvis.real, 'k', 1e-3*trho, bvis, 'r')
+plt.savefig('losses_VIS.pdf')
+plt.clf()
+
 
