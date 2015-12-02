@@ -26,8 +26,10 @@ SB *= flux/int_SB
 
 
 # define a "binned" version of the SB distribution
-nbbins = 40
-bb = np.linspace(0.03, 1.1, num=nbbins)
+nbbins = 24
+b1 = 0.02 + 0.035*np.arange(10)
+b2 = np.logspace(np.log10(b1[-1]), np.log10(1.1), num=15)
+bb = np.concatenate([b1[:-1], b2])
 ba = np.roll(bb, 1)
 ba[0] = 0.1/140.
 br = 0.5*(ba+bb)
@@ -38,15 +40,15 @@ for i in np.arange(nbbins): stepSB[(r>ba[i]) & (r<=bb[i])] = bSB[i]
 bins = 0.1/140., bb
 
 
+
 # load the "true" visibilities and convert to a binned 1-D profile
 data = np.load('../testbed/testA.vis.npz')
-Ruv = np.linspace(10., 3000., num=1000.)
 tt = deproject_vis([data['u'], data['v'], data['nf_Vis'], data['Wgt']],  
-                   bins= np.linspace(10., 3000., num=1000.))
+                   bins= np.linspace(10., 3000., num=150.))
 trho, tvis, tsig = tt
 # and with the noise
 nt = deproject_vis([data['u'], data['v'], data['Vis'], data['Wgt']], 
-                   bins= np.linspace(10., 3000., num=1000.))
+                   bins= np.linspace(10., 3000., num=150.))
 nrho, nvis, nsig = nt
 
 
@@ -84,7 +86,7 @@ f.write("{0:f}   {1:f}   {2:f}\n".format((toc-tic0)/3600., (toc-tic0)/3600., \
 f.close()
 
 
-for i in range(199):
+for i in range(99):
     tic = time.time()
     sampler.run_mcmc(sampler.chain[:, -1, :], iter)
     toc = time.time()

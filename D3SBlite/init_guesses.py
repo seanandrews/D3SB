@@ -40,8 +40,8 @@ bins = 0.1/140., bb
 
 
 # define a hybrid "binned" version of the SB distribution
-nbbins = 30
-b1 = np.linspace(0.03, 0.5, num=16)
+nbbins = 24
+b1 = 0.02 + 0.035*np.arange(10)
 b2 = np.logspace(np.log10(b1[-1]), np.log10(1.1), num=15)
 bb = np.concatenate([b1[:-1], b2])
 ba = np.roll(bb, 1)
@@ -52,6 +52,7 @@ bSB *= flux/int_SB
 stepSB = np.zeros_like(r)
 for i in np.arange(nbbins): stepSB[(r>ba[i]) & (r<=bb[i])] = bSB[i]
 bins = 0.1/140., bb
+
 
 
 # use the synthesized image to get an initial "guess" on SB distribution
@@ -75,11 +76,14 @@ for i in np.arange(nbbins): gstepSB[(r>ba[i]) & (r<=bb[i])] = gSB[i]
 # and account for convolution smearing at unresolved scales)
 ndim, nwalkers, nthreads = nbbins, 100, 8
 p0 = np.zeros((nwalkers, ndim))
-unrslvd = np.where(br < 0.5*0.08)
 for i in range(nwalkers):
-    sbtrial = gSB * (1.+np.random.uniform(-0.2, 0.2, ndim))
-    sbtrial[unrslvd] = gSB[unrslvd] * (1.+np.random.uniform(0, 1, len(unrslvd)))
-    p0[i][:] = np.minimum.accumulate(sbtrial)
+    ixs = br < 0.5*0.08
+    sbtrial_o = gSB[~ixs] * (1.+np.random.uniform(-0.2, 0.2, np.sum(~ixs)))
+    sbtrial_i = gSB[ixs] * (1.+np.random.uniform(0, 2, np.sum(ixs)))
+    if (np.sum(ixs) > 1):
+        m = np.log(sbtrial_i[0]/sbtrial_o[0])/np.log((br[ixs])[0]/(br[~ixs])[0])
+        sbtrial_i[0:] = (sbtrial_i[0]/(br[ixs])[0]**m) * (br[ixs])[0:]**m 
+    p0[i][:] = np.minimum.accumulate(np.concatenate([sbtrial_i, sbtrial_o]))
 
 
 # plot the SB distributions together
@@ -88,7 +92,8 @@ plt.loglog(imrad, dimage/omega_beam, '.y', alpha=0.01)
 plt.loglog(r, SB, 'k', r, stepSB, 'r', r, gstepSB, 'g')
 for i in range(nwalkers):
     plt.loglog(br, p0[i][:], 'b', alpha=0.05)
-plt.savefig('SB.png')
+#plt.savefig('SB.png')
+plt.show()
 plt.clf()
 
 
