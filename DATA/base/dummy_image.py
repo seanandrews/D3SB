@@ -7,7 +7,12 @@ def dummy_image(nx=512, ny=512, cellsize=0.01):
     # define a two-dimensional grid for the image
     xp, yp = np.meshgrid(cellsize*(np.arange(nx)-0.5*nx+0.5), \
                          cellsize*(np.arange(ny)-0.5*ny+0.5))
-    r = np.sqrt(xp**2 + yp**2)
+    incl = np.radians(50.)
+    PA = np.radians(70.)
+    xprime = ((xp-0.3)*np.cos(PA) + (yp+0.2)*np.sin(PA))/np.cos(incl)
+    yprime = ((xp-0.3)*np.sin(PA) - (yp+0.2)*np.cos(PA))
+    r = np.sqrt(xprime**2 + yprime**2)
+    #r = np.sqrt(xp**2 + yp**2)
 
     # assign an arbitrary radial brightness profile to the image
     # (you will fix this later to be any brightness profile you want)

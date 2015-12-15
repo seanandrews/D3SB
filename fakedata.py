@@ -5,7 +5,7 @@ from discreteModel import discreteModel
 
 
 # the output filename
-filename = 'DATA/test'
+filename = 'DATA/gtest'
 
 
 # define a high resolution set of bins for an "idealized" model
@@ -20,7 +20,10 @@ bins = rin, b
 # the brightness profile of the model
 flux = 0.12
 sig = 0.5
-incl = PA = offx = offy = 0.0
+incl = 50.
+PA = 70.
+offx = -0.3
+offy = -0.2
 SB = (flux / (2*np.pi*sig**2)) * np.exp(-0.5*(cb/sig)**2)
 int_SB = np.trapz(2.*np.pi*SB*cb, cb)		# a check on the total flux
 itheta = incl, PA, np.array([offx, offy]), SB

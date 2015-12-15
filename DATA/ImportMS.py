@@ -3,7 +3,7 @@ import numpy as np
 # original .ms file name
 oms_path = 'base'
 oms_name = 'dummy'
-mdl_name = 'testA'
+mdl_name = 'gtest'
 
 # copy the data file into a model 
 os.system('rm -rf '+mdl_name+'.ms')
