@@ -1,0 +1,62 @@
+2015/12/15:  Some notes on making fake data.
+
+There are various ways to go about this, but for now we're doing something a 
+little complicated.  This is for me to be able to reproduce things after a long
+absence.  First, we need to do a simulated observation to get the (u,v) samples
+we're interested in.  I call this the 'base'.
+
+* Make synthetic (u,v) tracks ('base'):
+
+(1) in DATA/base/ edit the file 'mk_synthMS.py'.  This script goes through CASA
+    to generate synthetic visibility data, as follows:
+	- creates a set(s) of (u,v) tracks given your inputs on integration 
+	  time and antenna configuration(s)
+	- tags each (u,v) position with a frequency, visibility, and weight
+	- takes a weighted average of the polarizations
+	- exports a numpy binary file for each set of tracks
+	- makes a concatenated MS (in time order)
+	* many of these steps are factored directly from my 'ExportMS.py'
+     now execute: 'python mk_synthMS.py' 
+
+
+You can use these 'dummy' models ('base' tracks) repeatedly for all sorts of 
+brightness models.  Now, these (u,v) tracks do have model visibilities in them, 
+but they're just placeholders (thus the 'dummy' names attached to them).  We 
+have to populate them with the model and appropriate scatter/noise levels.  
+
+* Populate (u,v) tracks with noisy model:
+
+(2) in the main directory, edit the file 'fakedata.py':
+	- first choose a name for the fake dataset
+	- the script then sets up a very high resolution radial grid (you can
+	  adjust this as needed; overkill is fine)
+	- next you define the radial SB profile and pack it properly (see the
+	  format required for 'discreteModel.py')
+	- then use 'discreteModel.py' to FT and sample properly for each set of
+	  (u,v) tracks in your 'base' (do this in time order!)
+	- define the RMS noise level you expect for each set of (u,v) tracks
+	  (this is akin to the RMS noise level in the CLEAN map)
+	- the script then corrupts the visibilities with random draws from a 
+	  Gaussian characterized by these noise levels, and creates a simple 
+	  set of visibility weights (right now, all the same)
+	- finally, the script concatenates the (u,v) tracks into a composite
+	  numpy save file (time-ordered)
+     now execute: 'python fakedata.py'
+     The result is a numpy binary file in the DATA/ directory.
+
+
+In our advocated methodology for initializing the inference package, we need to
+use a CLEAN map.  That requires a bit of manipulation, but is otherwise easy.
+
+* Make a CLEAN map from the noisy visibilities:
+
+(3) in the DATA/ directory, edit the input file name in the script 
+    'ImportMS.py' and then execute it in CASA: 
+    'casapy -c --nologger ImportMS.py'
+
+(4) in the DATA/ directory, edit the 'quickClean.py' script as appropriate 
+    (this will depend in detail on the nature of simulated dataset), and 
+    execute it in CASA (as you like).
+
+    The net result is a .fits image that can be used in your initialization.
+
