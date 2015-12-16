@@ -14,8 +14,10 @@ def discreteModel(theta, uvsamples, bins):
     offr = offset * np.pi / (180.*3600.)
 
     # coordinate change to deal with projection, rotation, and shifts
-    uprime = ((u-offr[0])*np.cos(PAr) + (v-offr[1])*np.sin(PAr)) * np.cos(inclr)
-    vprime = (-(u-offr[0])*np.sin(PAr) + (v-offr[1])*np.cos(PAr))
+    #uprime = ((u-offr[0])*np.cos(PAr) + (v-offr[1])*np.sin(PAr)) * np.cos(inclr)
+    #vprime = (-(u-offr[0])*np.sin(PAr) + (v-offr[1])*np.cos(PAr))
+    uprime = (u*np.cos(PAr) + v*np.sin(PAr)) * np.cos(inclr)
+    vprime = -u*np.sin(PAr) + v*np.cos(PAr)
     rho = np.sqrt(uprime**2 + vprime**2) * np.pi / (180.*3600.)
 
     # re-orient arrays
@@ -29,4 +31,8 @@ def discreteModel(theta, uvsamples, bins):
     jinc = sc.j1(jarg)/jarg
     vis = np.dot(2.*np.pi*rbin**2*intensity, jinc)
 
-    return vis
+    # impart a phase center shift
+    shift = np.exp(-2.*np.pi*1.0j*((u*-offr[0]) + (v*offr[1])))
+    model_vis = vis*shift
+
+    return model_vis
