@@ -5,7 +5,7 @@ from discreteModel import discreteModel
 
 
 # the output filename
-filename = 'DATA/gtest'
+filename = 'DATA/fullA'
 
 
 # define a high resolution set of bins for an "idealized" model
@@ -19,13 +19,16 @@ bins = rin, b
 
 # the brightness profile of the model
 flux = 0.12
-sig = 0.5
+sig = 0.6
 incl = 50.
 PA = 70.
 offx = -0.3
 offy = -0.2
-SB = (flux / (2*np.pi*sig**2)) * np.exp(-0.5*(cb/sig)**2)
+SB = (sig/cb)**0.7 * np.exp(-(cb/sig)**2.5)	# fullA distribution; where
+						# flux=0.12, sig=0.6, i=50, 
+						# PA = 70., offs=[-0.3, -0.2]
 int_SB = np.trapz(2.*np.pi*SB*cb, cb)		# a check on the total flux
+SB *= flux / int_SB
 itheta = incl, PA, np.array([offx, offy]), SB
 
 
