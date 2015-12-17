@@ -15,7 +15,7 @@ def lnprob(p, data, bins):
 
     # compute penalty for oscillations
     dcoeff = np.diff(p)
-    prior = 1.*np.sum(dcoeff[1:]*dcoeff[:-1] < 0) * len(dvis) / len(p)
+    prior = 1.*np.sum(dcoeff[1:]*dcoeff[:-1] < 0) * 2.*len(dvis) / len(p)
 
 
 
@@ -24,8 +24,8 @@ def lnprob(p, data, bins):
 
 
     # compute a chi2 value (proportional to log-likelihood)
-    chi2 = np.sum(((dvis-mvis)/dsig)**2)
-
+    chi2 = np.sum(((dvis.real-mvis.real)/dsig.real)**2 + 
+                  ((dvis.imag-mvis.imag)/dsig.imag)**2)
 
     # return a log-posterior value
     return -0.5*(chi2 + prior)

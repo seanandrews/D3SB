@@ -13,6 +13,8 @@ def discrete1d_model(theta, rho, bins):
     jarg = np.outer(2.*np.pi*rbin, np.pi*rho/(180.*3600.))
     jinc = sc.j1(jarg)/jarg
 
-    vis = np.dot(2.*np.pi*rbin**2*intensity, jinc)
+    vreal = np.dot(2.*np.pi*rbin**2*intensity, jinc)
+    vimag = np.zeros_like(vreal)
+    vis = vreal + 1.0j*vimag
 
     return vis
